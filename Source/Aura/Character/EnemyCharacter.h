@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "CharacterBase.h"
-#include "Aura/Interface/EnemyInterface.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -19,6 +18,9 @@ public:
 
 
 protected:
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 	
 	UFUNCTION()
 	void HighlightActor(UPrimitiveComponent* TouchedComponent);
@@ -26,6 +28,5 @@ protected:
 	UFUNCTION()
 	void UnHighlightActor(UPrimitiveComponent* TouchedComponent);
 	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	
 };

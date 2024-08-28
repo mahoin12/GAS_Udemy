@@ -3,6 +3,8 @@
 
 #include "EnemyCharacter.h"
 #include "Aura/Aura.h"
+#include "Aura/AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Aura/AbilitySystem/AuraAttributeSet.h"
 
 
 // Sets default values
@@ -10,6 +12,13 @@ AEnemyCharacter::AEnemyCharacter()
 {
 	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+
+	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	
+	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>(TEXT("AttributeSet"));
+	
 }
 
 void AEnemyCharacter::HighlightActor(UPrimitiveComponent* TouchedComponent)
@@ -31,5 +40,7 @@ void AEnemyCharacter::BeginPlay()
 
 	GetMesh()->OnBeginCursorOver.AddDynamic(this, &AEnemyCharacter::HighlightActor);
 	GetMesh()->OnEndCursorOver.AddDynamic(this, &AEnemyCharacter::UnHighlightActor);
+
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
