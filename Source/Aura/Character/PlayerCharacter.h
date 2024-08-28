@@ -14,10 +14,17 @@ class AURA_API APlayerCharacter : public ACharacterBase
 	// Sets default values for this character's properties
 	APlayerCharacter();
 
-
 public:
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void OnRep_PlayerState() override;
+
+	void InitAbilityActorInfo();
+
+	
 };
